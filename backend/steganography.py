@@ -45,7 +45,15 @@ def retrieve_data(image_path):
     bitstream_length = int(''.join(length_bits), 2)
     bits_extracted = 0
     
-    
+    for i in range(img_array.shape[0]):
+        for j in range(img_array.shape[1]):
+            if bits_extracted >= bitstream_length + 32:
+                break
+            if bits_extracted >= 32:
+                pixel_value = img_array[i, j]
+                bit = pixel_value & 1
+                extracted_bits.append(str(bit))
+            bits_extracted += 1
 
     binary_string = ''.join(extracted_bits)
     hidden_text = binary_to_text(binary_string)
